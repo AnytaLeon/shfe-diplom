@@ -18,20 +18,7 @@ function HallPage() {
         <div className="hall_scheme-container">
           <div className="hall_screen"></div>
 
-          <div className="hall_rows">
-            {/* {rows.map((row, rowIndex) => (
-          <div key={rowIndex} className="row">
-            {row.seats.map((seat, seatIndex) => (
-              <button
-                key={seatIndex}
-                className={`seat ${seat.type} ${seat.selected ? 'selected' : ''} ${seat.occupied ? 'occupied' : ''}`}
-                onClick={() => handleSeatSelect(rowIndex, seatIndex)}
-                disabled={seat.occupied || seat.type === 'disabled'}
-              />
-            ))} */}
-            {/* </div> */}
-            {/* ))} */}
-          </div>
+          <div className="hall_rows"></div>
           <div className="hall_scheme-prices">
             <div className="hall_scheme-item">
               <div className="hall_scheme-seat standart"></div>

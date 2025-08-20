@@ -9,7 +9,6 @@
 .calendar_list {
   display: flex;
   gap: 1px;
-  /* list-style: none; */
   padding: 0;
   margin-inline: auto;
   min-height: 58px;
@@ -49,10 +48,6 @@
   flex-wrap: wrap;
   background: rgb(255, 255, 255);
 }
-
-/* .day-item:hover {
-  color: red;
-} */
 
 .calendar_container {
   max-width: 1200px;
@@ -101,10 +96,6 @@
   height: 100%;
   object-fit: cover;
 }
-
-/* .movie_description {
-  flex: 1;
-} */
 
 .movie_title {
   font-size: 16px;

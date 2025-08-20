@@ -1,51 +1,3 @@
-/* .payment_header {
-  width: 100%;
-  background: rgba(241, 235, 230, 0.95);
-  padding: 30px 0px;
-  position: relative;
-  margin-bottom: 6px;
-}
-
-.payment_header::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 10px;
-  background: radial-gradient(
-      circle at 10px 5px,
-      rgba(241, 235, 230, 0.95) 4px,
-      rgba(241, 235, 230, 0.95) 5px,
-      rgba(241, 235, 230, 0.95) 6px,
-      transparent 7px
-    )
-    0 0 / 20px 9px repeat-x;
-} */
-
-/* .payment_header::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 10px;
-  background: radial-gradient(
-      circle at 10px 5px,
-      rgba(241, 235, 230, 0.95) 4px,
-      rgba(241, 235, 230, 0.95) 5px,
-      rgba(241, 235, 230, 0.95) 6px,
-      transparent 7px
-    )
-    0 0 / 20px 9px repeat-x;
-}
-
-.payment_header::before {
-  top: -5px;
-}
-
-.payment_header::after {
-  bottom: -5px;
-} */
-
 .payment_header {
   position: relative;
   width: 100%;
@@ -109,15 +61,6 @@
   text-align: left;
 }
 
-/* .section-payment {
-    position: relative;
-    min-width: 360px;
-    max-width: 990px;
-    margin: 0 auto;
-    padding: 20px 15px 30px;
-    background-color: rgba(241, 235, 230, 0.95);
-} */
-
 .ticket_container::before {
   content: "";
   display: block;
@@ -175,16 +118,11 @@
   font-size: 16px;
 }
 
-/* .payment_button:hover {
-  background: color.adjust(#16a6af, $lightness: -10%);
-} */
-
 .payment_hint {
   display: flex;
   flex-direction: column;
   gap: 11px;
   margin-top: 20px;
-  /* padding-inline: 15px; */
 }
 
 .payment_hint-text {

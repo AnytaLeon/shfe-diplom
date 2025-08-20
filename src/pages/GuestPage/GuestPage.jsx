@@ -12,11 +12,6 @@ function GuestPage() {
 
   useEffect(() => {
     const today = new Date();
-    // const generatedDates = Array.from({ length: 6 }, (_, i) => {
-    //   const date = new Date();
-    //   date.setDate(today.getDate() + i);
-    //   return date;
-    // });
     const generatedDates = [...Array(6).keys()].map((i) => {
       const date = new Date();
       date.setDate(today.getDate() + i);
@@ -55,10 +50,7 @@ function GuestPage() {
             {dates.map((date) => {
               const dateString = date.toISOString().split("T")[0];
               const isSelected = dateString === selectedDate;
-              const isWeekend = date.getDay() === 0 || date.getDay() === 6; // Проверка на выходные
-              // {`close-button ${
-              //             openSection.completedTasks ? "open" : ""
-              //           } `}
+              const isWeekend = date.getDay() === 0 || date.getDay() === 6;
               return (
                 <li
                   className={`calendar_list-item ${
@@ -109,7 +101,7 @@ function GuestPage() {
                     if (hallSeances.length === 0) return null;
                     return (
                       <div className="movie_seances-hall" key={hall.id}>
-                        <h4 className="hall_name">Зал {hall.hall_name}</h4>
+                        <h4 className="hall_name">{hall.hall_name}</h4>
                         <ul className="seances-list">
                           {hallSeances.map((seance) => (
                             <li className="seances-time" key={seance.id}>

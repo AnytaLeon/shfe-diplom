@@ -7,7 +7,6 @@
 .header {
   background-color: transparent;
   padding: 14px 0;
-  /* color: white; */
 }
 
 .header_container {
@@ -132,16 +131,6 @@
   background-size: contain;
   background-repeat: no-repeat;
 }
-
-/* Стили для блока с ценами */
-/* .hall_scheme-prices {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 30px;
-  padding-bottom: 20px;
-} */
 
 .hall_scheme-prices {
   display: grid;
