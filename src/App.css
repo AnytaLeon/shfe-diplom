@@ -1,0 +1,99 @@
+@font-face {
+  font-family: Roboto;
+  src: local (Roboto);
+  src: url(https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap);
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Roboto;
+  src: local (Roboto);
+  src: url(https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap);
+  font-style: normal;
+  font-weight: bold;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 360px;
+  max-width: 1600px;
+  min-height: 100vh;
+  margin: 0 auto;
+  font-family: Roboto, Arial, sans-serif;
+  color: #000000;
+  background-color: #ffffff;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#root {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  background-image: url("/bg-hall.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container {
+  max-width: 990px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+/* Header стили */
+.header {
+  background-color: transparent;
+  padding: 14px 0;
+  /* color: white; */
+}
+
+.header_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 34px;
+}
+
+.header_logo {
+  color: white;
+  font-size: 34px;
+  font-weight: 900;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.header_logo-letter {
+  font-weight: 100;
+}
+
+.header_button {
+  background-color: #16a6af;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  cursor: pointer;
+}

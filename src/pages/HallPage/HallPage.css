@@ -1,0 +1,227 @@
+.container {
+  max-width: 990px;
+  margin: 0 auto;
+}
+
+/* Header стили */
+.header {
+  background-color: transparent;
+  padding: 14px 0;
+  /* color: white; */
+}
+
+.header_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 34px;
+}
+
+.header_logo {
+  color: white;
+  font-size: 34px;
+  font-weight: 900;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.header_logo-letter {
+  font-weight: 100;
+}
+
+.header_button {
+  background-color: #16a6af;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* Стили для hall_container Название фильма, начало сеанса */
+.hall_container {
+  background: rgba(241, 235, 230, 0.95);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+
+.hall_info {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.hall_movie-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 9px;
+}
+
+.hall_movie-start {
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 7px;
+}
+
+.hall-name {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.tap {
+  width: 100px;
+  padding-left: 16px;
+  padding-right: 16px;
+  flex-direction: column;
+  align-items: center;
+  display: inline-flex;
+  position: relative;
+}
+
+.tap_description {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 16px;
+  text-align: center;
+}
+
+.tap_img {
+  width: 24px;
+  position: absolute;
+  left: -10px;
+  top: 17px;
+}
+
+/* Стили для схемы зала */
+
+.hall_scheme-container {
+  width: 30%;
+  height: 266px;
+  margin: 0px auto;
+}
+
+.hall_scheme {
+  background: #171d24;
+  color: white;
+  padding-top: 15px;
+}
+
+.hall_screen {
+  position: relative;
+  text-align: center;
+  padding-top: 30px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 15px;
+}
+
+.hall_screen::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 284px;
+  height: 30px;
+  background-image: url("/screen.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Стили для блока с ценами */
+/* .hall_scheme-prices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+  padding-bottom: 20px;
+} */
+
+.hall_scheme-prices {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 30px;
+  padding-bottom: 20px;
+}
+
+.hall_scheme-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.hall_scheme-seat {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  background: #171d24;
+  padding-right: calc(var(--bs-gutter-x) * 0);
+  padding-left: calc(var(--bs-gutter-x) * 0);
+}
+
+.hall_scheme-text {
+  /* margin-left: 4px; */
+  text-align: left;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 1);
+}
+
+.standart {
+  background: white;
+  border: 1px solid #525252;
+}
+
+.vip {
+  background: #f9953a;
+  border: 1px solid #525252;
+}
+
+.occupied {
+  border: 1px solid #525252;
+  cursor: default;
+}
+
+.disabled {
+  border: 1px solid #171d24;
+  cursor: default;
+}
+
+.selected {
+  transform: scale(1.2);
+  background: #25c4ce;
+  box-shadow: 0 0 4px #16a6af;
+}
+
+.hall_scheme-button {
+  background: rgba(241, 235, 230, 0.95);
+  padding-block: 30px;
+}
+
+.buy-button {
+  display: block;
+  margin-inline: auto;
+  padding: 0 57px;
+  height: 40px;
+  background: #16a6af;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  font-weight: 500;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.buy-button:hover {
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0.12),
+    0 3px 3px rgba(255, 255, 255, 0.24);
+}

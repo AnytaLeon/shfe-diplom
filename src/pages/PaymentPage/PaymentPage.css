@@ -1,0 +1,195 @@
+/* .payment_header {
+  width: 100%;
+  background: rgba(241, 235, 230, 0.95);
+  padding: 30px 0px;
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.payment_header::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: radial-gradient(
+      circle at 10px 5px,
+      rgba(241, 235, 230, 0.95) 4px,
+      rgba(241, 235, 230, 0.95) 5px,
+      rgba(241, 235, 230, 0.95) 6px,
+      transparent 7px
+    )
+    0 0 / 20px 9px repeat-x;
+} */
+
+/* .payment_header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: radial-gradient(
+      circle at 10px 5px,
+      rgba(241, 235, 230, 0.95) 4px,
+      rgba(241, 235, 230, 0.95) 5px,
+      rgba(241, 235, 230, 0.95) 6px,
+      transparent 7px
+    )
+    0 0 / 20px 9px repeat-x;
+}
+
+.payment_header::before {
+  top: -5px;
+}
+
+.payment_header::after {
+  bottom: -5px;
+} */
+
+.payment_header {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 6px;
+  height: 75px;
+  padding: 30px 0px;
+
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 25px;
+  text-transform: uppercase;
+  color: rgba(199, 111, 0, 1);
+  background-color: rgba(241, 235, 230, 0.95);
+}
+
+.payment_header::before {
+  content: "";
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  position: absolute;
+  background-image: url("/before-payment-header.png");
+  top: -4px;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+.payment_header::after {
+  content: "";
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  position: absolute;
+  background-image: url("/after-payment-header.png");
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+.payment_title {
+  color: #c76f00;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 25px;
+  text-transform: uppercase;
+  margin: 0;
+  padding-inline: 15px;
+  text-align: left;
+}
+
+.ticket_container {
+  width: 100%;
+  background: rgba(241, 235, 230, 0.95);
+  margin: 0 auto;
+  padding: 20px 15px 30px;
+  background-color: rgba(241, 235, 230, 0.95);
+  position: relative;
+  text-align: left;
+}
+
+/* .section-payment {
+    position: relative;
+    min-width: 360px;
+    max-width: 990px;
+    margin: 0 auto;
+    padding: 20px 15px 30px;
+    background-color: rgba(241, 235, 230, 0.95);
+} */
+
+.ticket_container::before {
+  content: "";
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  position: absolute;
+  background-image: url("/before-payment-header.png");
+  top: -3px;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.ticket_container::after {
+  content: "";
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  position: absolute;
+  background-image: url("/after-payment-header-copy.png");
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 5px;
+}
+
+.ticket_info {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18.4px;
+  margin-bottom: 20px;
+}
+
+.ticket_info-description {
+  margin-bottom: 15px;
+}
+
+.ticket_info-text {
+  margin: 0 0 10px 0;
+  font-weight: 700;
+}
+
+.payment_button {
+  display: block;
+  margin: 30px auto;
+  padding: 10px 57px;
+  min-height: 40px;
+  background: #16a6af;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  font-weight: 500;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* .payment_button:hover {
+  background: color.adjust(#16a6af, $lightness: -10%);
+} */
+
+.payment_hint {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin-top: 20px;
+  /* padding-inline: 15px; */
+}
+
+.payment_hint-text {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 200;
+  margin: 0;
+}
