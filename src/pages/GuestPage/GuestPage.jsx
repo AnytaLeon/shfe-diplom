@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./GuestPage.css";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
 function GuestPage() {
   const [dates, setDates] = useState([]);
@@ -9,6 +9,7 @@ function GuestPage() {
   const [halls, setHalls] = useState([]);
   const [seances, setSeances] = useState([]);
   const data = useLoaderData();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const today = new Date();
@@ -41,13 +42,46 @@ function GuestPage() {
     setSelectedDate(dateString);
   }
 
+  function handleNextDate() {
+    if (dates.length && selectedDate) {
+      const currentIndex = dates.findIndex(
+        (d) => d.toISOString().split("T")[0] === selectedDate
+      );
+      const nextIndex = (currentIndex + 1) % dates.length; // Цикличный переход
+      handleDateClick(dates[nextIndex]);
+    }
+  }
+
+  function handleSeanceClick(seanceId) {
+    const selectedSeance = seances.find((seance) => seance.id === seanceId);
+    const selectedFilm = films.find(
+      (film) => film.id === selectedSeance?.seance_filmid
+    );
+    const selectedHall = halls.find(
+      (hall) => hall.id === selectedSeance?.seance_hallid
+    );
+    if (!selectedSeance || !selectedFilm || !selectedHall) {
+      console.error("Не удалось найти данные для выбранного сеанса");
+      return;
+    }
+
+    navigate(`/hall/${seanceId}`, {
+      state: {
+        seance: selectedSeance,
+        film: selectedFilm,
+        hall: selectedHall,
+        selectedDate: selectedDate,
+      },
+    });
+  }
+
   return (
     <>
       <main className="guest-page">
         <nav className="calendar_nav">
           <div className="calendar_container"></div>
           <ul className="calendar_list">
-            {dates.map((date) => {
+            {dates.map((date, index) => {
               const dateString = date.toISOString().split("T")[0];
               const isSelected = dateString === selectedDate;
               const isWeekend = date.getDay() === 0 || date.getDay() === 6;
@@ -59,13 +93,29 @@ function GuestPage() {
                   key={dateString}
                   onClick={() => handleDateClick(date)}
                 >
-                  {date.toLocaleDateString("ru-RU", {
-                    weekday: "short",
-                  })}
-                  , {date.getDate()}
+                  <div>
+                    {index === 0
+                      ? "Сегодня"
+                      : `${date.toLocaleDateString("ru-RU", {
+                          weekday: "short",
+                        })},`}
+                  </div>
+                  <div>
+                    {index === 0
+                      ? `${date.toLocaleDateString("ru-RU", {
+                          weekday: "short",
+                        })}, ${date.getDate()}`
+                      : `${date.getDate()}`}
+                  </div>
                 </li>
               );
             })}
+            <li
+              className="calendar_list-item calendar_list-next"
+              onClick={handleNextDate}
+            >
+              {">"}
+            </li>
           </ul>
         </nav>
         <section className="movie_container">
@@ -104,7 +154,11 @@ function GuestPage() {
                         <h4 className="hall_name">{hall.hall_name}</h4>
                         <ul className="seances-list">
                           {hallSeances.map((seance) => (
-                            <li className="seances-time" key={seance.id}>
+                            <li
+                              className="seances-time"
+                              key={seance.id}
+                              onClick={() => handleSeanceClick(seance.id)}
+                            >
                               {seance.seance_time}
                             </li>
                           ))}

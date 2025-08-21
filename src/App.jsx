@@ -19,7 +19,7 @@ const router = createBrowserRouter([
         element: <GuestPage />,
         loader: fetchDataLoader,
       },
-      { path: "hall", element: <HallPage /> },
+      { path: "hall/:seanceId", element: <HallPage /> },
       { path: "payment", element: <PaymentPage /> },
       { path: "ticket", element: <Ticket /> },
     ],

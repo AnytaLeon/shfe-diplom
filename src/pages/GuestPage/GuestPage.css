@@ -36,6 +36,12 @@
   text-align: center;
 }
 
+.calendar_list-next {
+  align-items: center;
+  font-weight: 700;
+  font-size: 24px;
+}
+
 .weekend {
   color: red;
 }
@@ -101,6 +107,7 @@
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 11px;
+  text-align: left;
 }
 
 .movie_text {

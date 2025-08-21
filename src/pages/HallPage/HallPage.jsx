@@ -1,13 +1,80 @@
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./HallPage.css";
+import { useState } from "react";
 
 function HallPage() {
+  const { seanceId } = useParams();
+  const location = useLocation();
+  const { film, hall, seance, selectedDate } = location.state;
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const navigate = useNavigate();
+
+  function handleSeatClick(row, col) {
+    const rowIndex = row + 1; // Переносим нумерацию на 1
+    const colIndex = col + 1; // Переносим нумерацию на 1
+
+    const isSelected = selectedSeats.some(
+      ([r, c]) => r === rowIndex && c === colIndex
+    );
+
+    setSelectedSeats((prev) => {
+      const updatedSeats = isSelected
+        ? prev.filter(([r, c]) => r !== rowIndex || c !== colIndex)
+        : [...prev, [rowIndex, colIndex]];
+
+      // Сортировка мест по ряду и месту
+      return updatedSeats.sort(([r1, c1], [r2, c2]) =>
+        r1 === r2 ? c1 - c2 : r1 - r2
+      );
+    });
+  }
+  function handleBooking() {
+    const totalPrice = calculateTotalPrice();
+    const selectedSeatsString = getSelectedSeatsString();
+
+    console.log(calculateTotalPrice());
+    navigate("/payment", {
+      state: {
+        totalPrice,
+        filmName: film.film_name,
+        hallName: hall.hall_name,
+        seanceTime: seance.seance_time,
+        selectedSeats,
+        selectedSeatsString,
+      },
+    });
+  }
+
+  function calculateTotalPrice() {
+    return selectedSeats.reduce((total, [row, col]) => {
+      const seatType = hall?.hall_config[row - 1]?.[col - 1];
+      if (seatType === "vip") {
+        return total + hall.hall_price_vip;
+      }
+      if (seatType === "standart") {
+        return total + hall.hall_price_standart;
+      }
+      return total;
+    }, 0);
+  }
+
+  function getSelectedSeatsString() {
+    return selectedSeats
+      .map(([row, col]) => `Ряд ${row}, Место ${col}`)
+      .join(" | ");
+  }
+
+  console.log(hall);
+
   return (
     <main className="hall">
       <section className="hall_container">
         <div className="hall_info">
-          <h2 className="hall_movie-title">Звездные воины</h2>
-          <p className="hall_movie-start">Начало сеанса: 18-00</p>
-          <h3 className="hall-name">Зал 1</h3>
+          <h2 className="hall_movie-title">{film.film_name}</h2>
+          <p className="hall_movie-start">
+            Начало сеанса: {seance.seance_time}
+          </p>
+          <h3 className="hall-name">{hall.hall_name}</h3>
         </div>
         <div className="tap">
           <img className="tap_img" src="./hint.png" alt="tap" />
@@ -18,15 +85,56 @@ function HallPage() {
         <div className="hall_scheme-container">
           <div className="hall_screen"></div>
 
-          <div className="hall_rows"></div>
+          <div className="hall_scheme-grid">
+            {hall.hall_config.map((row, rowIndex) => (
+              <div key={rowIndex} className="hall_scheme-row">
+                {row.map((col, colIndex) => {
+                  const seatRow = rowIndex + 1; // Нумерация с 1
+                  const seatCol = colIndex + 1; // Нумерация с 1
+
+                  const isSelected = selectedSeats.some(
+                    ([r, c]) => r === seatRow && c === seatCol
+                  );
+                  const isDisabled = col === "disabled";
+                  const isTaken = col === "taken";
+                  const isVip = col === "vip";
+
+                  return (
+                    <div
+                      className={`hall_scheme-col ${
+                        isDisabled
+                          ? "disabled"
+                          : isSelected
+                          ? "selected"
+                          : isVip
+                          ? "vip"
+                          : isTaken
+                          ? "taken"
+                          : "standart"
+                      }`}
+                      key={colIndex}
+                      onClick={() =>
+                        !isDisabled && handleSeatClick(rowIndex, colIndex)
+                      }
+                      disabled={isDisabled || isTaken}
+                    ></div>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
           <div className="hall_scheme-prices">
             <div className="hall_scheme-item">
               <div className="hall_scheme-seat standart"></div>
-              <span className="hall_scheme-text">Обычные (250 руб)</span>
+              <span className="hall_scheme-text">
+                Обычные ({hall.hall_price_standart} руб)
+              </span>
             </div>
             <div className="hall_scheme-item">
               <div className="hall_scheme-seat vip"></div>
-              <span className="hall_scheme-text">VIP (350 руб)</span>
+              <span className="hall_scheme-text">
+                VIP ({hall.hall_price_vip} руб)
+              </span>
             </div>
             <div className="hall_scheme-item">
               <div className="hall_scheme-seat occupied"></div>
@@ -39,7 +147,13 @@ function HallPage() {
           </div>
         </div>
         <div className="hall_scheme-button">
-          <button className="buy-button">Забронировать</button>
+          <button
+            className="buy-button"
+            onClick={handleBooking}
+            disabled={selectedSeats.length === 0}
+          >
+            Забронировать
+          </button>
         </div>
       </section>
     </main>

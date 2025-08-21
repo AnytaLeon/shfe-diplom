@@ -100,7 +100,6 @@
 
 .hall_scheme-container {
   width: 30%;
-  height: 266px;
   margin: 0px auto;
 }
 
@@ -114,7 +113,7 @@
   position: relative;
   text-align: center;
   padding-top: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   text-transform: uppercase;
   letter-spacing: 15px;
 }
@@ -165,6 +164,33 @@
   color: rgba(255, 255, 255, 1);
 }
 
+.hall_scheme-grid {
+  display: grid;
+  gap: 5px;
+  justify-content: center;
+  grid-template-rows: repeat(auto, 1fr);
+  grid-auto-rows: minmax(20px, auto);
+}
+
+.hall_scheme-row {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.hall_scheme-col {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  background: #171d24;
+  padding-right: calc(var(--bs-gutter-x) * 0);
+  padding-left: calc(var(--bs-gutter-x) * 0);
+  /* display: flex;
+  justify-content: center;
+  gap: 5px; */
+}
+
 .standart {
   background: white;
   border: 1px solid #525252;
@@ -177,12 +203,12 @@
 
 .occupied {
   border: 1px solid #525252;
-  cursor: default;
+  cursor: not-allowed;
 }
 
 .disabled {
   border: 1px solid #171d24;
-  cursor: default;
+  cursor: not-allowed;
 }
 
 .selected {
