@@ -1,11 +1,11 @@
-function Header() {
+function Header({ showLoginButton = true }) {
   return (
     <header className="header">
       <div className="header_container">
         <h1 className="header_logo">
           идем <span className="header_logo-letter">в</span> кино
         </h1>
-        <button className="header_button">Войти</button>
+        {showLoginButton && <button className="header_button">Войти</button>}
       </div>
     </header>
   );

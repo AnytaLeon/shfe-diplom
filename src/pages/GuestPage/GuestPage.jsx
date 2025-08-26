@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./GuestPage.css";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import Header from "../../components/Header";
 
 function GuestPage() {
   const [dates, setDates] = useState([]);
@@ -32,10 +33,6 @@ function GuestPage() {
     setHalls(data.result.halls);
     setSeances(data.result.seances);
   }, []);
-
-  console.log(seances);
-  console.log(halls);
-  console.log(films);
 
   function handleDateClick(date) {
     const dateString = date.toISOString().split("T")[0];
@@ -76,7 +73,8 @@ function GuestPage() {
   }
 
   return (
-    <>
+    <div className="container">
+      <Header />
       <main className="guest-page">
         <nav className="calendar_nav">
           <div className="calendar_container"></div>
@@ -172,7 +170,7 @@ function GuestPage() {
           </ul>
         </section>
       </main>
-    </>
+    </div>
   );
 }
 
