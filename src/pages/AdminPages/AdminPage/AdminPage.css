@@ -1,0 +1,193 @@
+.admin-section__container {
+  padding: 0;
+  width: 100%;
+}
+
+.admin-main {
+  max-width: 972px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.admin-section__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  background-color: #63536c;
+
+  width: 100%;
+  height: 95px;
+  padding-left: 90px;
+  padding-right: 30px;
+}
+
+.admin-section__header-container {
+  width: 100%;
+
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-section__header-tittle {
+  text-transform: uppercase;
+  text-align: left;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 25px;
+}
+
+.admin-section__header-close-button {
+  width: 24px;
+  height: 16px;
+  background-image: url(/admin__arrow.png);
+  background-size: cover;
+  cursor: pointer;
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
+
+.admin-section__body {
+  position: relative;
+  color: #000;
+
+  display: flex;
+  flex-direction: column;
+
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.125rem;
+
+  background: #eae9ebf2;
+  padding: 35px 25px 36px 94px;
+}
+
+.admin-section__hidden {
+  display: none;
+}
+
+.admin-section__hallSet {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 0 22px 25px;
+  gap: 10px;
+}
+
+.admin-section__btn {
+  max-width: 159px;
+  width: 100%;
+  height: 40px;
+  color: #fff;
+
+  border-radius: 3px;
+  border: none !important;
+  padding: 0.75rem;
+
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1rem;
+  text-transform: uppercase;
+
+  background-color: #16a6af;
+  transition: border-color 0.25s;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.24);
+
+  cursor: pointer;
+}
+
+.hallSet__list-item {
+  display: flex;
+  gap: 10px;
+  color: #000;
+
+  flex-wrap: nowrap;
+  align-items: center;
+
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.125rem;
+  text-transform: uppercase;
+
+  margin: 0;
+}
+
+.hallSet__delete-button {
+  position: relative;
+  width: 20px;
+  height: 20px;
+
+  margin-right: -10px;
+
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.24);
+  background: url(/admin__before-trashcan.png);
+  background-position: center;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  border-radius: 3px;
+
+  cursor: pointer;
+}
+
+.admin-section__hall-config {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 12px;
+  margin-bottom: 35px;
+}
+
+.admin-section__hall-item {
+  padding: 12px 20px;
+  margin-bottom: 3px;
+  margin-right: 1px;
+
+  background: #ffffff73;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  border-radius: 3px;
+
+  height: 42px;
+
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+
+  cursor: pointer;
+}
+
+.admin-section__hall-item-selected {
+  height: 46px;
+
+  font-size: 0.935rem;
+  font-weight: 900;
+
+  background-color: #ffffff;
+  box-shadow: 0px 6px 8px 0px #0000003d;
+  border: 1px solid #ddd;
+}
+
+.admin-section__btn {
+  max-width: 159px;
+  width: 100%;
+  height: 40px;
+  color: #fff;
+  border-radius: 3px;
+  border: none;
+
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1rem;
+  text-transform: uppercase;
+  background-color: #16a6af;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.24);
+  cursor: pointer;
+}
+
+.admin-section__btn:active {
+  background-color: #63536c;
+  border: none;
+}

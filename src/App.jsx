@@ -2,11 +2,15 @@ import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import "./App.css";
-import HallPage from "./pages/HallPage/HallPage";
-import GuestPage from "./pages/GuestPage/GuestPage";
-import PaymentPage from "./pages/PaymentPage/PaymentPage";
-import Ticket from "./pages/Ticket/Ticket";
+import HallPage from "./pages/GuestPages/HallPage/HallPage";
+import GuestPage from "./pages/GuestPages/GuestPage/GuestPage";
+import PaymentPage from "./pages/GuestPages/PaymentPage/PaymentPage";
+import Ticket from "./pages/GuestPages/Ticket/Ticket";
 import fetchDataLoader from "./loaders/allDataLoader";
+import { login } from "./pages/AdminPages/LoginPage/LoginPage";
+import LoginPage from "./pages/AdminPages/LoginPage/LoginPage";
+import AdminPage from "./pages/AdminPages/AdminPage/AdminPage";
+import { createHall } from "./components/AddHallModal/AddHallModal";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +21,14 @@ const router = createBrowserRouter([
   { path: "hall/:seanceId", element: <HallPage /> },
   { path: "payment", element: <PaymentPage /> },
   { path: "ticket", element: <Ticket /> },
+  { path: "admin/login", element: <LoginPage />, action: login },
+  {
+    path: "admin",
+    element: <AdminPage />,
+    loader: fetchDataLoader,
+    action: createHall,
+  },
+  // { path: "admin/addhall", element: <LoginPage />, action: login },
 ]);
 
 function App() {

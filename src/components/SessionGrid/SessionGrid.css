@@ -1,0 +1,192 @@
+.session-grid {
+}
+
+.film-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding-top: 12px;
+  padding-bottom: 51px;
+}
+
+.film-card {
+  position: relative;
+
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  width: 259px;
+  height: 52px;
+  display: flex;
+
+  cursor: grab;
+}
+
+.film-card__poster {
+  width: 38px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.film-card__details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 10px;
+  padding-right: 10px;
+  justify-content: center;
+}
+
+.film-card__details-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1rem;
+  margin: 0 !important;
+}
+
+.film-card__details-duration {
+  font-size: 0.875rem;
+  line-height: 1rem;
+  color: #000000b2;
+  margin: 0 !important;
+}
+
+.film-card__delete-button {
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+
+  width: 20px;
+  height: 20px;
+
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.24);
+  background: url("/admin-delete.png");
+  background-position: center;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  border-radius: 3px;
+
+  cursor: pointer;
+}
+
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-left: 37px;
+  padding-bottom: 30px;
+  max-width: 816px;
+  margin-right: 20px;
+}
+
+.timeline__hall-name {
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.timeline__container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  max-width: 720px;
+  border: 1px solid #848484;
+}
+
+.timeline__seance {
+  position: absolute;
+  padding: 4px;
+  top: 10px;
+  bottom: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: content-box;
+
+  cursor: grab;
+}
+
+.timeline__film-name {
+  font-size: 0.625rem;
+  font-weight: 400;
+  text-align: center;
+  line-height: 0.625rem;
+  margin: 0;
+}
+
+.timeline__start-time {
+  position: absolute;
+  margin: 0;
+
+  top: 65px;
+  height: 13.8px;
+
+  font-size: 0.75rem;
+  text-align: center;
+  font-weight: 400;
+  line-height: 0.875rem;
+
+  color: #848484;
+}
+
+.timeline__start-time::before {
+  content: "";
+  position: absolute;
+  width: 1px;
+  max-width: 1px;
+  min-width: 1px;
+  height: 5px;
+  background: #848484;
+  top: -6px;
+  left: 1px;
+}
+
+.session-grid__actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.session-grid__actions-cancel {
+  height: 40px;
+
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1rem;
+
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  width: 121px;
+
+  background-color: #fff;
+  color: #63536c;
+}
+
+.session-grid__actions-cancel:active {
+  background-color: #63536c;
+  color: #fff;
+}
+
+.session-grid__actions-save {
+  height: 40px;
+
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1rem;
+
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  width: 146px;
+
+  background-color: #16a6af;
+  color: white;
+}
+
+.session-grid__actions-save:active {
+  background-color: #63536c;
+}
