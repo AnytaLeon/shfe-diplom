@@ -1,6 +1,7 @@
-import { useDrop } from "react-dnd";
+import { useDrop, useDrag } from "react-dnd";
 import { useState } from "react";
-import AddSeanceModal from "./AddSeanceModal";
+import SeanceCard from "./SeanceCard";
+import "./SessionGrid.css";
 
 const colors = [
   "#85FFD3",
@@ -11,68 +12,77 @@ const colors = [
   "#85E2FF",
 ];
 
-function TimeLine({ hall, seances, films }) {
-  const sortedSeances = [...seances].sort((a, b) => {
-    const [aHours, aMinutes] = a.seance_time.split(":").map(Number);
-    const [bHours, bMinutes] = b.seance_time.split(":").map(Number);
-    return aHours * 60 + aMinutes - (bHours * 60 + bMinutes);
-  });
+function TimeLine({
+  hall,
+  seances,
+  films,
+  setIsDeleteSeanceModalOpen,
+  setModalData,
+}) {
+  const [isDragging, setIsDragging] = useState(false);
 
-  const [timeLineSeances, setTimeLineSeances] = useState(sortedSeances);
-  const [isAddSeanseModal, setIsAddSeanseModal] = useState(false);
-
-  console.log(sortedSeances);
-
-  const [{ isOver }, dropRef] = useDrop({
+  const [, dropRef] = useDrop({
     accept: "film",
     drop: (item) => {
-      setIsAddSeanseModal(true);
+      if (item.filmId) {
+        return { hallId: hall.id };
+      }
+    },
+  });
+
+  const [{ isOver }, trashDrop] = useDrop({
+    accept: "seance",
+    drop: (item) => {
+      setIsDeleteSeanceModalOpen(true);
+      setModalData({
+        seanceId: item.seanceId,
+        filmName: item.filmName,
+      });
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
   });
 
+  const sortedSeances = [...seances].sort((a, b) => {
+    const [aHours, aMinutes] = a.seance_time.split(":").map(Number);
+    const [bHours, bMinutes] = b.seance_time.split(":").map(Number);
+    return aHours * 60 + aMinutes - (bHours * 60 + bMinutes);
+  });
   return (
     <div className="timeline" ref={dropRef}>
+      {isDragging && (
+        <div
+          className={`timeline__trash ${isOver ? "highlight" : ""}`}
+          ref={trashDrop}
+        ></div>
+      )}
       <h2 className="timeline__hall-name">{hall.hall_name}</h2>
       <div className="timeline__container">
-        {timeLineSeances.map((seance) => {
+        {sortedSeances.map((seance) => {
           const film = films.find((film) => film.id === seance.seance_filmid);
           const startTime = seance.seance_time.split(":").map(Number);
           const leftPosition =
             ((startTime[0] * 60 + startTime[1]) / 1440) * 100;
-          const colorIndex = film ? Math.floor(film.id / 5) % colors.length : 0;
+          const colorIndex = film
+            ? Math.floor(films.indexOf(film)) % colors.length
+            : 0;
           const duration = film?.film_duration || 0;
           const width = (duration / 1440) * 100;
           const backgroundColor = colors[colorIndex];
           return (
-            <div key={seance.id}>
-              <div
-                className="timeline__seance"
-                style={{
-                  left: `${leftPosition}%`,
-                  width: `${width}%`,
-                  backgroundColor,
-                }}
-              >
-                <p className="timeline__film-name">{film?.film_name}</p>
-              </div>
-              <div>
-                <p
-                  className="timeline__start-time"
-                  style={{
-                    left: `${leftPosition}%`,
-                  }}
-                >
-                  {seance.seance_time}
-                </p>
-              </div>
-            </div>
+            <SeanceCard
+              key={seance.id}
+              seance={seance}
+              film={film}
+              backgroundColor={backgroundColor}
+              leftPosition={leftPosition}
+              width={width}
+              setIsDragging={setIsDragging}
+            />
           );
         })}
       </div>
-      {isAddSeanseModal && <AddSeanceModal />}
     </div>
   );
 }

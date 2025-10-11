@@ -106,6 +106,8 @@
   box-sizing: content-box;
 
   cursor: grab;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .timeline__film-name {
@@ -189,4 +191,20 @@
 
 .session-grid__actions-save:active {
   background-color: #63536c;
+}
+
+.timeline__trash {
+  position: absolute;
+  left: -10px;
+  top: 30px;
+  width: 40px;
+  height: 40px;
+  background: url(/trash.png) no-repeat center;
+  background-size: contain;
+}
+
+.highlight {
+  background-color: rgba(255, 0, 0, 0.1);
+  border: 1px solid red;
+  border-radius: 30%;
 }

@@ -10,8 +10,7 @@ const colors = [
   "#85E2FF",
 ];
 
-function FilmCard({ film, onDeleteFilm }) {
-  console.log(film);
+function FilmCard({ films, film, onDeleteFilm }) {
   const [{ isDragging }, dragRef] = useDrag({
     type: "film",
     item: { filmId: film.id },
@@ -19,7 +18,8 @@ function FilmCard({ film, onDeleteFilm }) {
       isDragging: monitor.isDragging(),
     }),
   });
-  const colorIndex = Math.floor(film.id / 5) % colors.length;
+
+  const colorIndex = Math.floor(films.indexOf(film)) % colors.length;
   const backgroundColor = colors[colorIndex];
 
   return (
