@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { createContext, useState } from "react";
 import FilmCard from "./FilmCard";
 import TimeLine from "./TimeLine";
 import "./SessionGrid.css";
@@ -6,9 +6,11 @@ import AddSeanceModal from "./AddSeanceModal";
 import DeleteSeanceModal from "./DeleteSeanceModal";
 import { useDrop } from "react-dnd";
 
+export const MyContext = createContext();
+
 function SessionGrid({ halls, films, seances, setSeances, setFilms }) {
   const [isAddSeanseModal, setIsAddSeanseModal] = useState(false);
-  const [modalData, setModalData] = useState({});
+  const [modalData, setModalData] = useState({ filmId: "", hallId: "" });
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleteSeanceModalOpen, setIsDeleteSeanceModalOpen] = useState(false);
@@ -110,60 +112,63 @@ function SessionGrid({ halls, films, seances, setSeances, setFilms }) {
   function handleSave() {}
 
   return (
-    <div className="session-grid">
-      <div className="film-list">
-        {films.map((film) => (
-          <FilmCard
-            key={film.id}
-            film={film}
-            onDeleteFilm={handleDeleteFilm}
-            films={films}
+    <MyContext.Provider value={{ modalData, setModalData }}>
+      <div className="session-grid">
+        <div className="film-list">
+          {films.map((film) => (
+            <FilmCard
+              key={film.id}
+              film={film}
+              onDeleteFilm={handleDeleteFilm}
+              films={films}
+            />
+          ))}
+        </div>
+        <div className="timeline-container" ref={dropRef}>
+          {halls.map((hall) => (
+            <TimeLine
+              key={hall.id}
+              hall={hall}
+              films={films}
+              seances={seances.filter((s) => s.seance_hallid === hall.id)}
+              setIsDeleteSeanceModalOpen={setIsDeleteSeanceModalOpen}
+              isDeleteModalOpen={isDeleteSeanceModalOpen}
+            />
+          ))}
+        </div>
+        <div className="session-grid__actions">
+          <button
+            className="session-grid__actions-cancel"
+            onClick={handleCancel}
+          >
+            ОТМЕНА
+          </button>
+          <button className="session-grid__actions-save" onClick={handleSave}>
+            СОХРАНИТЬ
+          </button>
+        </div>
+        {isAddSeanseModal && (
+          <AddSeanceModal
+            onClose={() => {
+              setIsAddSeanseModal(false);
+            }}
+            handleAddSeance={handleAddSeance}
+            filmName={
+              films.find((f) => f.id === modalData?.filmId)?.film_name || ""
+            }
+            hallName={
+              halls.find((h) => h.id === modalData?.hallId)?.hall_name || ""
+            }
           />
-        ))}
-      </div>
-      <div className="timeline-container" ref={dropRef}>
-        {halls.map((hall) => (
-          <TimeLine
-            key={hall.id}
-            hall={hall}
-            films={films}
-            seances={seances.filter((s) => s.seance_hallid === hall.id)}
-            setIsDeleteSeanceModalOpen={setIsDeleteSeanceModalOpen}
-            isDeleteModalOpen={isDeleteSeanceModalOpen}
-            setModalData={setModalData}
+        )}
+        {isDeleteSeanceModalOpen && (
+          <DeleteSeanceModal
+            onClose={() => setIsDeleteSeanceModalOpen(false)}
+            handleSeanceDelete={() => handleSeanceDelete(modalData.seanceId)}
           />
-        ))}
+        )}
       </div>
-      <div className="session-grid__actions">
-        <button className="session-grid__actions-cancel" onClick={handleCancel}>
-          ОТМЕНА
-        </button>
-        <button className="session-grid__actions-save" onClick={handleSave}>
-          СОХРАНИТЬ
-        </button>
-      </div>
-      {isAddSeanseModal && (
-        <AddSeanceModal
-          onClose={() => {
-            setIsAddSeanseModal(false);
-          }}
-          handleAddSeance={handleAddSeance}
-          filmName={
-            films.find((f) => f.id === modalData?.filmId)?.film_name || ""
-          }
-          hallName={
-            halls.find((h) => h.id === modalData?.hallId)?.hall_name || ""
-          }
-        />
-      )}
-      {isDeleteSeanceModalOpen && (
-        <DeleteSeanceModal
-          modalData={modalData}
-          onClose={() => setIsDeleteSeanceModalOpen(false)}
-          handleSeanceDelete={() => handleSeanceDelete(modalData.seanceId)}
-        />
-      )}
-    </div>
+    </MyContext.Provider>
   );
 }
 

@@ -49,8 +49,27 @@ function GuestPage() {
     }
   }
 
-  function handleSeanceClick(seanceId) {
-    const selectedSeance = seances.find((seance) => seance.id === seanceId);
+  function handleSeanceClick(seance) {
+    const currentDate = new Date();
+    const selectedDateSplit = selectedDate.split("-").map(Number);
+    const isToday =
+      selectedDateSplit[2] === currentDate.getDate() &&
+      selectedDateSplit[1] === currentDate.getMonth() + 1 &&
+      selectedDateSplit[0] === currentDate.getFullYear();
+
+    if (isToday) {
+      const [hours, minutes] = seance.seance_time.split(":").map(Number);
+      const seanceTime = new Date();
+      seanceTime.setHours(hours, minutes, 0, 0);
+
+      if (seanceTime < currentDate) {
+        return;
+      }
+    }
+
+    const selectedSeance = seances.find(
+      (currentSeance) => currentSeance.id === seance.id
+    );
     const selectedFilm = films.find(
       (film) => film.id === selectedSeance?.seance_filmid
     );
@@ -62,7 +81,7 @@ function GuestPage() {
       return;
     }
 
-    navigate(`/hall/${seanceId}`, {
+    navigate(`/hall/${seance.id}`, {
       state: {
         seance: selectedSeance,
         film: selectedFilm,
@@ -145,7 +164,8 @@ function GuestPage() {
                       const hallSeances = seances.filter(
                         (seance) =>
                           seance.seance_filmid === film.id &&
-                          seance.seance_hallid === hall.id
+                          seance.seance_hallid === hall.id &&
+                          hall.hall_open === 1
                       );
                       if (hallSeances.length === 0) return null;
                       return (
@@ -156,7 +176,7 @@ function GuestPage() {
                               <li
                                 className="seances-time"
                                 key={seance.id}
-                                onClick={() => handleSeanceClick(seance.id)}
+                                onClick={() => handleSeanceClick(seance)}
                               >
                                 {seance.seance_time}
                               </li>

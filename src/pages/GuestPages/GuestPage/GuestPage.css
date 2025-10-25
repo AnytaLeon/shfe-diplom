@@ -20,7 +20,7 @@
   margin-inline: auto;
   min-height: 58px;
   align-items: center;
-  width: 990px;
+  width: 100%;
 }
 
 .calendar_list-item {

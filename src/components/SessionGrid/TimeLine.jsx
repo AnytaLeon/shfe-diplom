@@ -1,7 +1,8 @@
 import { useDrop, useDrag } from "react-dnd";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import SeanceCard from "./SeanceCard";
 import "./SessionGrid.css";
+import { MyContext } from "./SessionGrid";
 
 const colors = [
   "#85FFD3",
@@ -12,13 +13,8 @@ const colors = [
   "#85E2FF",
 ];
 
-function TimeLine({
-  hall,
-  seances,
-  films,
-  setIsDeleteSeanceModalOpen,
-  setModalData,
-}) {
+function TimeLine({ hall, seances, films, setIsDeleteSeanceModalOpen }) {
+  const { setModalData } = useContext(MyContext);
   const [isDragging, setIsDragging] = useState(false);
 
   const [, dropRef] = useDrop({

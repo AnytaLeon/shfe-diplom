@@ -8,6 +8,7 @@ function HallPage() {
   const location = useLocation();
   const { film, hall, seance, selectedDate } = location.state;
   const [selectedSeats, setSelectedSeats] = useState([]);
+  const [isZoomed, setIsZoomed] = useState(false);
   const navigate = useNavigate();
 
   function handleSeatClick(row, col) {
@@ -75,12 +76,19 @@ function HallPage() {
       .join(" | ");
   }
 
+  function handleDoubleClick() {
+    console.log("DOUBLE CLICK");
+    if (window.innerWidth <= 1200) {
+      setIsZoomed(!isZoomed);
+    }
+  }
+
   return (
     <div className="guest-container">
-      <div className="container">
+      <div className={`container ${isZoomed ? "container-zoomed" : ""}`}>
         <Header showLoginButton={false} />
         <main className="hall">
-          <section className="hall_container">
+          <section className="hall_container" onDoubleClick={handleDoubleClick}>
             <div className="hall_info">
               <h2 className="hall_movie-title">{film.film_name}</h2>
               <p className="hall_movie-start">

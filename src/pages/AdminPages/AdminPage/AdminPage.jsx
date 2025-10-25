@@ -6,6 +6,7 @@ import HallConfig from "../../../components/HallConfig/HallConfig";
 import PriceConfig from "../../../components/PriceConfig/PriceConfig";
 import AddFilmModal from "../../../components/AddFilmModal/AddFilmModal";
 import SessionGrid from "../../../components/SessionGrid/SessionGrid";
+import OpenSales from "../../../components/OpenSales/OpenSales";
 
 function AdminPage() {
   const data = useLoaderData();
@@ -28,28 +29,22 @@ function AdminPage() {
   const [selectedHallForPrice, setSelectedHallForPrice] = useState(
     halls[0] || null
   );
+  const [selectedHallForOpen, setSelectedHallForOpen] = useState(
+    halls[0] || null
+  );
 
-  function handleHallDelete(id) {
-    fetch(`https://shfe-diplom.neto-server.ru/hall/${id}`, {
-      method: "DELETE",
-    })
-      .then((response) => response.json())
-      .then((data) => setHalls(data.result.halls));
+  async function handleHallDelete(id) {
+    try {
+      const res = await fetch(`https://shfe-diplom.neto-server.ru/hall/${id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+
+      setHalls(data.result.halls);
+    } catch (error) {
+      console.error("Ошибка при удалении зала", error);
+    }
   }
-
-  // async function handleHallDelete(id) {
-
-  //       try {
-  //         const res = await fetch(`https://shfe-diplom.neto-server.ru/hall/${id}`, {
-  //           method: "DELETE",
-  //         });
-  //         const data = res.json();
-
-  //   setHalls(data.result.halls);
-  //       } catch (error) {
-  //         console.error("Ошибка при удалении зала", error);
-  //       }
-  // }
 
   function isSectionOpen(id) {
     return sectionStates.find((section) => section.id === id)?.isOpen;
@@ -68,7 +63,9 @@ function AdminPage() {
     setHalls(data.result.halls);
   }
 
-  function handleFilmAdded() {}
+  function handleFilmAdded(data) {
+    setFilms(data);
+  }
 
   function handleHallConfigClick(hall) {
     if (selectedHallForConfig?.id !== hall.id) {
@@ -79,6 +76,12 @@ function AdminPage() {
   function handleHallPriceClick(hall) {
     if (selectedHallForPrice?.id !== hall.id) {
       setSelectedHallForPrice(hall);
+    }
+  }
+
+  function handleHallOpenClick(hall) {
+    if (selectedHallForOpen?.id !== hall.id) {
+      setSelectedHallForOpen(hall);
     }
   }
 
@@ -95,6 +98,10 @@ function AdminPage() {
 
     if (selectedHallForPrice?.id === updatedHallData.id) {
       setSelectedHallForPrice(updatedHallData);
+    }
+
+    if (selectedHallForOpen?.id === updatedHallData.id) {
+      setSelectedHallForOpen(updatedHallData);
     }
   };
 
@@ -129,7 +136,7 @@ function AdminPage() {
       </header>
       <main className="admin-main">
         <section className="admin-section__container">
-          <header className="admin-section__header">
+          <header className="admin-section__header admin-section__header-alone">
             <div className="admin-section__header-container">
               <div className="admin-section__header-tittle">
                 Управление залами
@@ -143,7 +150,7 @@ function AdminPage() {
             </div>
           </header>
           <div
-            className={`admin-section__body ${
+            className={`admin-section__body admin-section__body-both ${
               isSectionOpen("hallManagment") ? "" : "admin-section__hidden"
             }`}
           >
@@ -174,7 +181,7 @@ function AdminPage() {
           </div>
         </section>
         <section className="admin-section__container">
-          <header className="admin-section__header">
+          <header className="admin-section__header admin-section__header-alone admin-section__header-both">
             <div className="admin-section__header-container">
               <div className="admin-section__header-tittle">
                 Конфигурация залов
@@ -188,7 +195,7 @@ function AdminPage() {
             </div>
           </header>
           <div
-            className={`admin-section__body ${
+            className={`admin-section__body admin-section__body-both ${
               isSectionOpen("hallConfig") ? "" : "admin-section__hidden"
             }`}
           >
@@ -221,7 +228,7 @@ function AdminPage() {
           </div>
         </section>
         <section className="admin-section__container">
-          <header className="admin-section__header admin-section__header-alone">
+          <header className="admin-section__header admin-section__header-alone admin-section__header-both">
             <div className="admin-section__header-container">
               <div className="admin-section__header-tittle">
                 Конфигурация цен
@@ -235,7 +242,7 @@ function AdminPage() {
             </div>
           </header>
           <div
-            className={`admin-section__body ${
+            className={`admin-section__body admin-section__body-both ${
               isSectionOpen("priceConfig") ? "" : "admin-section__hidden"
             }`}
           >
@@ -268,7 +275,7 @@ function AdminPage() {
           </div>
         </section>
         <section className="admin-section__container">
-          <header className="admin-section__header admin-section__header-alone">
+          <header className="admin-section__header admin-section__header-alone admin-section__header-both">
             <div className="admin-section__header-container">
               <div className="admin-section__header-tittle">сетка сеансов</div>
               <div
@@ -280,7 +287,7 @@ function AdminPage() {
             </div>
           </header>
           <div
-            className={`admin-section__body ${
+            className={`admin-section__body admin-section__body-both ${
               isSectionOpen("sessionGrid") ? "" : "admin-section__hidden"
             }`}
           >
@@ -302,7 +309,7 @@ function AdminPage() {
           </div>
         </section>
         <section className="admin-section__container">
-          <header className="admin-section__header admin-section__header-alone">
+          <header className="admin-section__header  admin-section__header-last">
             <div className="admin-section__header-container">
               <div className="admin-section__header-tittle">
                 открыть продажи
@@ -316,13 +323,35 @@ function AdminPage() {
             </div>
           </header>
           <div
-            className={`admin-section__body ${
+            className={`admin-section__body  ${
               isSectionOpen("openSales") ? "" : "admin-section__hidden"
             }`}
           >
-            <div>Доступные залы:</div>
-            <div className="admin-section__hallSet"> </div>
-            <button className="admin-section__btn">Cоздать зал</button>
+            <div>Выберите зал для открытия/закрытия продаж:</div>
+            <ul className="admin-section__hall-config">
+              {halls.map((hall) => {
+                if (halls.length === 0) return null;
+                return (
+                  <li
+                    key={hall.id}
+                    className={`admin-section__hall-item ${
+                      selectedHallForOpen?.id === hall.id
+                        ? "admin-section__hall-item-selected"
+                        : ""
+                    }`}
+                    onClick={() => handleHallOpenClick(hall)}
+                  >
+                    {hall.hall_name}
+                  </li>
+                );
+              })}
+            </ul>
+            {selectedHallForOpen && (
+              <OpenSales
+                selectedHallForOpen={selectedHallForOpen}
+                onSave={handleSave}
+              />
+            )}
           </div>
         </section>
       </main>

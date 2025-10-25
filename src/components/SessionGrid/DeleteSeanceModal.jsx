@@ -1,4 +1,8 @@
-function DeleteSeanceModal({ modalData, onClose, handleSeanceDelete }) {
+import { useContext } from "react";
+import { MyContext } from "./SessionGrid";
+
+function DeleteSeanceModal({ onClose, handleSeanceDelete }) {
+  const { modalData } = useContext(MyContext);
   return (
     <div className="modal__overlay">
       <div className="modal__content">

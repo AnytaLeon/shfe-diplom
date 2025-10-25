@@ -18,7 +18,6 @@ export async function createHall({ request }) {
   }
 
   const result = await response.json();
-
   return result;
 }
 
