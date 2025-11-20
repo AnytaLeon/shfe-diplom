@@ -2,7 +2,7 @@
   "name": "diplom",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://anytaleon.github.io/shfe-diplom/",
+  "homepage": "https://anytaleon.github.io/shfe-diplom",
   "type": "module",
   "scripts": {
     "dev": "vite",
