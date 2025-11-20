@@ -53,6 +53,10 @@
 }
 
 /* Стили для hall_container Название фильма, начало сеанса */
+.hall {
+  width: 100%;
+}
+
 .hall_container {
   background: rgba(241, 235, 230, 0.95);
   display: flex;

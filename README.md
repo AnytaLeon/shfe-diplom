@@ -1,12 +1,36 @@
-# React + Vite
+# Сайт для бронирования билетов в кинотеатр, с информационной системой для администрирования залов, сеансов и предварительного бронирования билетов.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Стэк технологий, используемых в процессе работы над проектом.
 
-Currently, two official plugins are available:
+- React, Vite, React Router, React-DND.
+- HTML, CSS, JavaScript.
+- Figma.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Макет страниц в Figma](https://www.figma.com/design/zGf2lm7mUBGeXWlZQyf9LH/%D0%94%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD-%D0%BC%D0%B0%D0%BA%D0%B5%D1%82--1-?node-id=0-1&p=f)
 
-## Expanding the ESLint configuration
+## Описание проекта
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Сущности
+
+Кинозал – помещение, в котором демонстрируются фильмы. Режим работы определяется расписанием на день. Зал — прямоугольный, состоит из N\*M различных зрительских мест.
+Зрительское место – место в кинозале. Зрительские места могут быть VIP и обычные.
+Фильм – информация о фильме заполняется администратором. Фильм связан с сеансом в кинозале.
+Сеанс – это временной промежуток, в котором в кинозале будет показываться фильм. На сеанс могут быть забронированы билеты.
+Билет – QR-код c уникальным кодом бронирования, в котором обязательно указаны: Дата, Время, Название фильма, Зал, Ряд, Место, Стоимость, Фраза "Билет действителен строго на свой сеанс".
+
+2. Роли пользователей системы
+
+   Гость — неавторизованный посетитель сайта.
+   Администратор — авторизованный пользователь.
+
+3. Возможности гостя
+   Просмотр расписания
+   Просмотр информации о фильмах
+   Выбор места в кинозале
+   Бронирование билета
+   
+4. Возможности администратора
+   Создание или редактирование залов.
+   Создание или редактирование списка фильмов.
+   Настройка цен.
+   Создание или редактирование расписания сеансов фильмов.

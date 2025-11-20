@@ -28,7 +28,6 @@ const router = createBrowserRouter([
     loader: fetchDataLoader,
     action: createHall,
   },
-  // { path: "admin/addhall", element: <LoginPage />, action: login },
 ]);
 
 function App() {

@@ -2,13 +2,13 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./HallPage.css";
 import Header from "../../../components/Header";
 import { useState } from "react";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 function HallPage() {
   const { seanceId } = useParams();
   const location = useLocation();
   const { film, hall, seance, selectedDate } = location.state;
   const [selectedSeats, setSelectedSeats] = useState([]);
-  const [isZoomed, setIsZoomed] = useState(false);
   const navigate = useNavigate();
 
   function handleSeatClick(row, col) {
@@ -76,109 +76,113 @@ function HallPage() {
       .join(" | ");
   }
 
-  function handleDoubleClick() {
-    console.log("DOUBLE CLICK");
-    if (window.innerWidth <= 1200) {
-      setIsZoomed(!isZoomed);
-    }
-  }
-
   return (
     <div className="guest-container">
-      <div className={`container ${isZoomed ? "container-zoomed" : ""}`}>
+      <div className="container">
         <Header showLoginButton={false} />
-        <main className="hall">
-          <section className="hall_container" onDoubleClick={handleDoubleClick}>
-            <div className="hall_info">
-              <h2 className="hall_movie-title">{film.film_name}</h2>
-              <p className="hall_movie-start">
-                Начало сеанса: {seance.seance_time}
-              </p>
-              <h3 className="hall-name">{hall.hall_name}</h3>
-            </div>
-            <div className="tap">
-              <img className="tap_img" src="/hint.png" alt="tap" />
-              <div className="tap_description">
-                Тапните дважды, чтобы увеличить
-              </div>
-            </div>
-          </section>
-          <section className="hall_scheme">
-            <div className="hall_scheme-container">
-              <div className="hall_screen"></div>
-
-              <div className="hall_scheme-grid">
-                {hall.hall_config.map((row, rowIndex) => (
-                  <div key={rowIndex} className="hall_scheme-row">
-                    {row.map((col, colIndex) => {
-                      const seatRow = rowIndex + 1; // Нумерация с 1
-                      const seatCol = colIndex + 1; // Нумерация с 1
-
-                      const isSelected = selectedSeats.some(
-                        ([r, c]) => r === seatRow && c === seatCol
-                      );
-                      const isDisabled = col === "disabled";
-                      const isTaken = col === "taken";
-                      const isVip = col === "vip";
-
-                      return (
-                        <div
-                          className={`hall_scheme-col ${
-                            isDisabled
-                              ? "disabled"
-                              : isSelected
-                              ? "selected"
-                              : isVip
-                              ? "vip"
-                              : isTaken
-                              ? "taken"
-                              : "standart"
-                          }`}
-                          key={colIndex}
-                          onClick={() =>
-                            !isDisabled && handleSeatClick(rowIndex, colIndex)
-                          }
-                          disabled={isDisabled || isTaken}
-                        ></div>
-                      );
-                    })}
+        <div className="hall">
+          <TransformWrapper initialSize={1}>
+            <TransformComponent
+              wrapperStyle={{ width: "100%" }}
+              contentStyle={{ width: "100%" }}
+              initialSize={1}
+            >
+              <main className="hall">
+                <section className="hall_container">
+                  <div className="hall_info">
+                    <h2 className="hall_movie-title">{film.film_name}</h2>
+                    <p className="hall_movie-start">
+                      Начало сеанса: {seance.seance_time}
+                    </p>
+                    <h3 className="hall-name">{hall.hall_name}</h3>
                   </div>
-                ))}
-              </div>
-              <div className="hall_scheme-prices">
-                <div className="hall_scheme-item">
-                  <div className="hall_scheme-seat standart"></div>
-                  <span className="hall_scheme-text">
-                    Обычные ({hall.hall_price_standart} руб)
-                  </span>
-                </div>
-                <div className="hall_scheme-item">
-                  <div className="hall_scheme-seat vip"></div>
-                  <span className="hall_scheme-text">
-                    VIP ({hall.hall_price_vip} руб)
-                  </span>
-                </div>
-                <div className="hall_scheme-item">
-                  <div className="hall_scheme-seat occupied"></div>
-                  <span className="hall_scheme-text">Занято</span>
-                </div>
-                <div className="hall_scheme-item">
-                  <div className="hall_scheme-seat selected"></div>
-                  <span className="hall_scheme-text">Выбрано</span>
-                </div>
-              </div>
-            </div>
-            <div className="hall_scheme-button">
-              <button
-                className="buy-button"
-                onClick={handleBooking}
-                disabled={selectedSeats.length === 0}
-              >
-                Забронировать
-              </button>
-            </div>
-          </section>
-        </main>
+                  <div className="tap">
+                    <img className="tap_img" src="/hint.png" alt="tap" />
+                    <div className="tap_description">
+                      Тапните дважды, чтобы увеличить
+                    </div>
+                  </div>
+                </section>
+                <section className="hall_scheme">
+                  <div className="hall_scheme-container">
+                    <div className="hall_screen"></div>
+
+                    <div className="hall_scheme-grid">
+                      {hall.hall_config.map((row, rowIndex) => (
+                        <div key={rowIndex} className="hall_scheme-row">
+                          {row.map((col, colIndex) => {
+                            const seatRow = rowIndex + 1; // Нумерация с 1
+                            const seatCol = colIndex + 1; // Нумерация с 1
+
+                            const isSelected = selectedSeats.some(
+                              ([r, c]) => r === seatRow && c === seatCol
+                            );
+                            const isDisabled = col === "disabled";
+                            const isTaken = col === "taken";
+                            const isVip = col === "vip";
+
+                            return (
+                              <div
+                                className={`hall_scheme-col ${
+                                  isDisabled
+                                    ? "disabled"
+                                    : isSelected
+                                    ? "selected"
+                                    : isVip
+                                    ? "vip"
+                                    : isTaken
+                                    ? "taken"
+                                    : "standart"
+                                }`}
+                                key={colIndex}
+                                onClick={() =>
+                                  !isDisabled &&
+                                  handleSeatClick(rowIndex, colIndex)
+                                }
+                                disabled={isDisabled || isTaken}
+                              ></div>
+                            );
+                          })}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="hall_scheme-prices">
+                      <div className="hall_scheme-item">
+                        <div className="hall_scheme-seat standart"></div>
+                        <span className="hall_scheme-text">
+                          Обычные ({hall.hall_price_standart} руб)
+                        </span>
+                      </div>
+                      <div className="hall_scheme-item">
+                        <div className="hall_scheme-seat vip"></div>
+                        <span className="hall_scheme-text">
+                          VIP ({hall.hall_price_vip} руб)
+                        </span>
+                      </div>
+                      <div className="hall_scheme-item">
+                        <div className="hall_scheme-seat occupied"></div>
+                        <span className="hall_scheme-text">Занято</span>
+                      </div>
+                      <div className="hall_scheme-item">
+                        <div className="hall_scheme-seat selected"></div>
+                        <span className="hall_scheme-text">Выбрано</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="hall_scheme-button">
+                    <button
+                      className="buy-button"
+                      onClick={handleBooking}
+                      disabled={selectedSeats.length === 0}
+                    >
+                      Забронировать
+                    </button>
+                  </div>
+                </section>
+              </main>
+            </TransformComponent>
+          </TransformWrapper>
+        </div>
       </div>
     </div>
   );

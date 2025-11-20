@@ -1,4 +1,4 @@
-import { Form } from "react-router-dom";
+import { Form, redirect } from "react-router-dom";
 import "./AddHallModal.css";
 
 export async function createHall({ request }) {
@@ -18,6 +18,7 @@ export async function createHall({ request }) {
   }
 
   const result = await response.json();
+
   return result;
 }
 
