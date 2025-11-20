@@ -30,7 +30,7 @@ const router = createBrowserRouter(
       action: createHall,
     },
   ],
-  { basename: import.meta.env.BASE_URL }
+  { basename: "/shfe-diplom" }
 );
 
 function App() {
