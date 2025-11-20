@@ -12,23 +12,26 @@ import LoginPage from "./pages/AdminPages/LoginPage/LoginPage";
 import AdminPage from "./pages/AdminPages/AdminPage/AdminPage";
 import { createHall } from "./components/AddHallModal/AddHallModal";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <GuestPage />,
-    loader: fetchDataLoader,
-  },
-  { path: "hall/:seanceId", element: <HallPage /> },
-  { path: "payment", element: <PaymentPage /> },
-  { path: "ticket", element: <Ticket /> },
-  { path: "admin/login", element: <LoginPage />, action: login },
-  {
-    path: "admin",
-    element: <AdminPage />,
-    loader: fetchDataLoader,
-    action: createHall,
-  },
-]);
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <GuestPage />,
+      loader: fetchDataLoader,
+    },
+    { path: "hall/:seanceId", element: <HallPage /> },
+    { path: "payment", element: <PaymentPage /> },
+    { path: "ticket", element: <Ticket /> },
+    { path: "admin/login", element: <LoginPage />, action: login },
+    {
+      path: "admin",
+      element: <AdminPage />,
+      loader: fetchDataLoader,
+      action: createHall,
+    },
+  ],
+  { basename: import.meta.env.BASE_URL }
+);
 
 function App() {
   return <RouterProvider router={router} />;
