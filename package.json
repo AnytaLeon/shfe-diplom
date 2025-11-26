@@ -1,6 +1,6 @@
 {
   "name": "diplom",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "homepage": "https://anytaleon.github.io/shfe-diplom",
   "type": "module",
