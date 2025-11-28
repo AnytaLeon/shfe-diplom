@@ -14,26 +14,40 @@ function PriceConfig({ hallData, onSave, onCancel }) {
 
   function handlePriceStandartChange(newPriceStandart) {
     if (newPriceStandart === "") {
-      setPriceStandart(0);
+      setPriceStandart(1);
       return;
     }
+    if (newPriceStandart < 1) {
+      newPriceStandart = 1;
+      setPriceStandart(1);
+    }
 
-    const parsedStandartPrice = parseInt(newPriceStandart, 10);
+    if (newPriceStandart > 2000) {
+      newPriceStandart = 2000;
+      setPriceStandart(2000);
+    }
 
-    if (!isNaN(parsedStandartPrice)) {
-      setPriceStandart(parsedStandartPrice);
+    if (!isNaN(newPriceStandart)) {
+      setPriceStandart(newPriceStandart);
     }
   }
   function handlePriceVipChange(newPriceVip) {
     if (newPriceVip === "") {
-      setPriceVip(0);
+      setPriceVip(1);
       return;
     }
+    if (newPriceVip < 1) {
+      newPriceVip = 1;
+      setPriceVip(1);
+    }
 
-    const parsedVipPrice = parseInt(newPriceVip, 10);
+    if (newPriceVip > 2000) {
+      newPriceVip = 2000;
+      setPriceVip(2000);
+    }
 
-    if (!isNaN(parsedVipPrice)) {
-      setPriceVip(parsedVipPrice);
+    if (!isNaN(newPriceVip)) {
+      setPriceVip(newPriceVip);
     }
   }
 

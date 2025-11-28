@@ -1,5 +1,6 @@
-import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "./App.css";
 import HallPage from "./pages/GuestPages/HallPage/HallPage";
@@ -10,7 +11,6 @@ import fetchDataLoader from "./loaders/allDataLoader";
 import { login } from "./pages/AdminPages/LoginPage/LoginPage";
 import LoginPage from "./pages/AdminPages/LoginPage/LoginPage";
 import AdminPage from "./pages/AdminPages/AdminPage/AdminPage";
-import { createHall } from "./components/AddHallModal/AddHallModal";
 
 const router = createBrowserRouter(
   [
@@ -27,14 +27,28 @@ const router = createBrowserRouter(
       path: "admin",
       element: <AdminPage />,
       loader: fetchDataLoader,
-      action: createHall,
     },
   ],
   { basename: "/shfe-diplom" }
 );
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
 export default App;

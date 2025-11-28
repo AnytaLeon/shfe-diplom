@@ -24,25 +24,42 @@ function HallConfig({ hallData, onSave, onCancel }) {
 
   function handleRowsChange(newRows) {
     if (newRows === "") {
-      setRows(0);
+      setRows(1);
       return;
     }
+    if (newRows > 20) {
+      newRows = 20;
+      setRows(newRows);
+    }
 
-    const parsedRows = parseInt(newRows, 10);
+    if (newRows < 1) {
+      newRows = 1;
+      setRows(newRows);
+    }
 
-    if (!isNaN(parsedRows)) {
-      setRows(parsedRows);
+    if (!isNaN(newRows)) {
+      setRows(newRows);
     }
   }
   function handlePlacesChange(newPlaces) {
     if (newPlaces === "") {
-      setPlaces(0);
+      setPlaces(1);
       return;
     }
-    const parsedPlaces = parseInt(newPlaces, 10);
-    if (!isNaN(parsedPlaces)) {
-      setPlaces(parsedPlaces);
+    if (newPlaces > 20) {
+      newPlaces = 20;
+      setPlaces(newPlaces);
     }
+
+    if (newPlaces < 1) {
+      newPlaces = 1;
+      setPlaces(newPlaces);
+    }
+    if (!isNaN(newPlaces)) {
+      setPlaces(newPlaces);
+    }
+
+    console.log(places);
   }
 
   function handleSeatClick(rowIndex, placeIndex) {
@@ -75,6 +92,7 @@ function HallConfig({ hallData, onSave, onCancel }) {
       hall_places: places,
       hall_config: config,
     };
+
     const params = new FormData();
     params.set("rowCount", rows.toString());
     params.set("placeCount", places.toString());
@@ -108,8 +126,13 @@ function HallConfig({ hallData, onSave, onCancel }) {
               value={rows || " "}
               inputMode="numeric"
               min="1"
-              max="10"
+              max="20"
               onChange={(e) => handleRowsChange(e.target.value)}
+              onBlur={() => {
+                if (!rows || rows < 1) setRows(1);
+                if (rows > 20) setRows(20);
+              }}
+              required
             />
           </label>
           <span className="hall-config__controls-symbol">x</span>
@@ -121,8 +144,13 @@ function HallConfig({ hallData, onSave, onCancel }) {
               value={places || " "}
               inputMode="numeric"
               min="1"
-              max="10"
+              max="20"
               onChange={(e) => handlePlacesChange(e.target.value)}
+              // onBlur={() => {
+              //   if (!places || places < 1) setPlaces(1);
+              //   if (places > 20) setPlaces(20);
+              // }}
+              required
             />
           </label>
         </div>

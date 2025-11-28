@@ -58,13 +58,12 @@ function AdminPage() {
     );
   }
 
-  function closeAddHallModal() {
-    setIsHallModalOpen(false);
-    setHalls(data.result.halls);
-  }
-
   function handleFilmAdded(data) {
     setFilms(data);
+  }
+
+  function handleHallAdded(data) {
+    setHalls(data);
   }
 
   function handleHallConfigClick(hall) {
@@ -355,7 +354,12 @@ function AdminPage() {
           </div>
         </section>
       </main>
-      {isHallModalOpen && <AddHallModal onClose={() => closeAddHallModal()} />}
+      {isHallModalOpen && (
+        <AddHallModal
+          onClose={() => setIsHallModalOpen(false)}
+          onHallAdded={handleHallAdded}
+        />
+      )}
       {isFilmModalOpen && (
         <AddFilmModal
           onClose={() => setIsFilmModalOpen(false)}

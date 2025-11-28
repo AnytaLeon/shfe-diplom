@@ -1,5 +1,7 @@
 import "./AddFilmModal.css";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AddFilmModal({ onClose, onFilmAdded }) {
   const [form, setForm] = useState({
@@ -15,11 +17,22 @@ function AddFilmModal({ onClose, onFilmAdded }) {
   async function handleSubmit(e) {
     e.preventDefault();
     if (isSubmitting) return;
+    setError(null);
+
     if (!form.poster) {
       setError("Пожалуйста, добавьте постер для фильма.");
+      toast.error("Не удалось добавить фильм, добавьте постер");
+
       return;
     }
-    setError(null);
+    if (Number(form.duration) < 0) {
+      setError("Пожалуйста, проверьте продолжительность фильма");
+      toast.error(
+        "Не удалось добавить фильм, проверьте продолжительность фильма"
+      );
+      return;
+    }
+
     setIsSubmitting(true);
 
     const params = new FormData();
@@ -36,8 +49,6 @@ function AddFilmModal({ onClose, onFilmAdded }) {
       });
 
       const data = await response.json();
-      console.log(data);
-
       onFilmAdded(data.result.films);
       onClose();
     } catch (error) {
@@ -46,6 +57,7 @@ function AddFilmModal({ onClose, onFilmAdded }) {
       setIsSubmitting(false);
     }
   }
+
   function handleChange(e) {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));

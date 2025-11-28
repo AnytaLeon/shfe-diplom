@@ -1,15 +1,40 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./HallPage.css";
 import Header from "../../../components/Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 function HallPage() {
   const { seanceId } = useParams();
   const location = useLocation();
-  const { film, hall, seance, selectedDate } = location.state;
+
+  const { film, seance, hall, selectedDate } = location.state;
+  const [hallConfig, setHallConfig] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    hallConfigLoader();
+  }, []);
+
+  async function hallConfigLoader() {
+    try {
+      const res = await fetch(
+        `https://shfe-diplom.neto-server.ru/hallconfig?seanceId=${seance.id}&date=${selectedDate}`,
+        {
+          method: "GET",
+        }
+      );
+      if (!res.ok) {
+        throw new Error("Failed to fetch hall data");
+      }
+      const data = await res.json();
+
+      setHallConfig(data.result);
+    } catch (error) {
+      console.error("Ошибка загрузки фильмов", error);
+    }
+  }
 
   function handleSeatClick(row, col) {
     const rowIndex = row + 1; // Переносим нумерацию на 1
@@ -108,7 +133,7 @@ function HallPage() {
                     <div className="hall_screen"></div>
 
                     <div className="hall_scheme-grid">
-                      {hall.hall_config.map((row, rowIndex) => (
+                      {hallConfig.map((row, rowIndex) => (
                         <div key={rowIndex} className="hall_scheme-row">
                           {row.map((col, colIndex) => {
                             const seatRow = rowIndex + 1; // Нумерация с 1

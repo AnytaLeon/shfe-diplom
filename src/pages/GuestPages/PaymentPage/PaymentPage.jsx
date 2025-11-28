@@ -6,7 +6,6 @@ import Header from "../../../components/Header";
 function PaymentPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  // const [qrData, setQrData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const {
@@ -43,7 +42,6 @@ function PaymentPage() {
       const result = await response.json();
 
       setLoading(false);
-      console.log("Билеты успешно забронированы:", result);
       navigate("/ticket", {
         state: {
           totalPrice,

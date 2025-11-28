@@ -1,28 +1,41 @@
-import { Form, redirect } from "react-router-dom";
+import { useState } from "react";
 import "./AddHallModal.css";
 
-export async function createHall({ request }) {
-  const formData = await request.formData();
-  const hallName = formData.get("hallName");
+function AddHallModal({ onClose, onHallAdded }) {
+  const [hallName, setHallName] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
 
-  const response = await fetch("https://shfe-diplom.neto-server.ru/hall", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ hallName }),
-  });
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (isSubmitting) return;
+    setError(null);
+    setIsSubmitting(true);
 
-  if (!response.ok) {
-    throw new Error("Failed");
+    const params = new FormData();
+    params.set("hallName", hallName);
+
+    try {
+      const response = await fetch("https://shfe-diplom.neto-server.ru/hall", {
+        method: "POST",
+        body: params,
+      });
+
+      const data = await response.json();
+
+      if (data.success && data.result?.halls) {
+        onHallAdded(data.result.halls);
+        onClose();
+      } else {
+        console.error("Ошибка создания зала:", data.message);
+      }
+    } catch (error) {
+      console.error("Ошибка сети при создании зала:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
-  const result = await response.json();
-
-  return result;
-}
-
-function AddHallModal({ onClose }) {
   return (
     <div className="modal__overlay">
       <div className="modal__content">
@@ -30,7 +43,7 @@ function AddHallModal({ onClose }) {
           <h2>Добавление зала</h2>
           <div className="modal__close" onClick={onClose}></div>
         </header>
-        <Form className="modal__form" method="post" action="/admin">
+        <form className="modal__form" onSubmit={handleSubmit}>
           <div className="modal__form-container">
             <label className="modal__form-label">
               Название зала
@@ -38,24 +51,31 @@ function AddHallModal({ onClose }) {
                 type="text"
                 className="modal__form-input"
                 placeholder="Например, «Зал 1»"
-                name="hallName"
+                id="hallName"
+                name="name"
+                onChange={(e) => setHallName(e.target.value)}
                 required
               />
             </label>
           </div>
           <div className="modal__actions">
-            <button type="submit" className="btn-box btn__primary">
+            <button
+              type="submit"
+              className="btn-box btn__primary"
+              disabled={isSubmitting}
+            >
               Добавить
             </button>
             <button
               type="button"
               className="btn-box btn__secondary"
               onClick={onClose}
+              disabled={isSubmitting}
             >
               Отменить
             </button>
           </div>
-        </Form>
+        </form>
       </div>
     </div>
   );
